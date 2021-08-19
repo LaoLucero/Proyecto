@@ -9,18 +9,18 @@ using Microsoft.Extensions.Configuration;
 
 namespace Proyecto.Models
 {
-    public class UserContext : DbContext
+    public class Service : DbContext
     {
         
         public DbSet<User> User { get; set; }
 
-        public UserContext() : base()
+        public Service() : base()
         {
 
         }
 
 
-        public UserContext(DbContextOptions<DbContext> options) : base (options)
+        public Service(DbContextOptions<DbContext> options) : base (options)
         {
 
         }
@@ -38,7 +38,27 @@ namespace Proyecto.Models
             }
         }
 
-        internal static UserContext OrderBy(Func<object, bool> p)
+        public async Task<IEnumerable<User>> ListUsers()
+        {
+            var userList = await User.ToListAsync();
+            return userList;
+        }
+
+        public async Task<User> GetUserById(int id )
+        {
+            var user = await User.FirstOrDefaultAsync(x => x.Id == id);
+            return user;
+        }
+
+        public async Task<User> CreateAsync(User user)
+        {
+            var newUser = await User.AddAsync(user);
+
+            return newUser.Entity;
+
+        }
+
+        internal static Service OrderBy(Func<object, bool> p)
         {
             throw new NotImplementedException();
         }

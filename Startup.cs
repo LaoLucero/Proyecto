@@ -25,7 +25,7 @@ namespace Proyecto
  
             services.AddControllers();
 
-            services.AddDbContext<UserContext>(options =>
+            services.AddDbContext<Service>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); //CADENA LAMDA
 
             services.AddSwaggerGen(c =>
